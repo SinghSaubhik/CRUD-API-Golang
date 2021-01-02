@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"todo-app/dao"
 	"todo-app/models"
 
@@ -25,9 +24,6 @@ func GetTodos(context *gin.Context) {
 func GetTodo(context *gin.Context) {
 	id := context.Param("id")
 	todo, err := dao.FindOne(id)
-
-	println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-	fmt.Println(err)
 	if err != nil {
 		context.JSON(404, gin.H{
 			"todo":  nil,
