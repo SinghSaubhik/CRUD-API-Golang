@@ -17,8 +17,12 @@ func main() {
 
 	// Routes
 	router.GET("/todos", controller.GetTodos)
-	router.POST("/todos", controller.AddTodo)
 	router.GET("/todo/:id", controller.GetTodo)
+
+	router.DELETE("/todo/:id", controller.DeleteTodo)
+	
+	router.POST("/todos", controller.AddTodo)
+	router.PUT("/todo/:id", controller.UpdateTodo)
 
 	if err := router.Run(); err != nil {
 		log.Fatal("Unable to start server!!!", err)

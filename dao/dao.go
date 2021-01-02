@@ -77,7 +77,42 @@ func FindOne(id string) (Todo, error) {
 	collection, ctx, cancel := getCollection()
 	defer cancel()
 
-	filter := bson.D{{"_id",  id}}
+	filter := bson.D{{"_id", id}}
 	err := collection.FindOne(ctx, filter).Decode(&todo)
 	return todo, err
+}
+
+func FindOneAndDelete(id string) (Todo, error) {
+	var deletedTodo Todo
+	collection, ctx, cancel := getCollection()
+	defer cancel()
+	filter := bson.D{{"_id", id}}
+	err := collection.FindOneAndDelete(ctx, filter).Decode(&deletedTodo)
+
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return deletedTodo, err
+		}
+		log.Fatal(err)
+	}
+
+	return deletedTodo, nil
+}
+
+func FindOneAndUpdate(id string, newTodo Todo) (Todo, error) {
+	var updatedDoc Todo
+	collection, ctx, cancel := getCollection()
+	defer cancel()
+	filter := bson.D{{"_id", id}}
+	//bson.D{{"$set", bson.D{{"email", "newemail@example.com"}}}}
+	newDoc := bson.M{"$set": bson.M{"_id": id, "title": newTodo.Title, "completed": newTodo.Completed}}
+	err := collection.FindOneAndUpdate(ctx, filter, newDoc).Decode(&updatedDoc)
+
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return updatedDoc, err
+		}
+		log.Fatal(err)
+	}
+	return updatedDoc, nil
 }
