@@ -2,11 +2,12 @@ package main
 
 import (
 	"context"
-	"github.com/gin-gonic/gin"
-	"go.mongodb.org/mongo-driver/mongo"
 	"log"
 	"todo-app/controller"
 	"todo-app/dao"
+
+	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 func main() {
@@ -20,7 +21,7 @@ func main() {
 	router.GET("/todo/:id", controller.GetTodo)
 
 	router.DELETE("/todo/:id", controller.DeleteTodo)
-	
+
 	router.POST("/todos", controller.AddTodo)
 	router.PUT("/todo/:id", controller.UpdateTodo)
 
@@ -28,6 +29,7 @@ func main() {
 		log.Fatal("Unable to start server!!!", err)
 	}
 
+	// Close DB connection when application is exiting
 	defer disconnectDB(dbClient, ctx)
 }
 

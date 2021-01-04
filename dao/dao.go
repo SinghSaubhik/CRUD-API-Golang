@@ -2,16 +2,17 @@ package dao
 
 import (
 	"context"
-	"go.mongodb.org/mongo-driver/bson"
 	"log"
 	"time"
 	"todo-app/utils"
 
+	"go.mongodb.org/mongo-driver/bson"
+
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-)
 
-import . "todo-app/models"
+	. "todo-app/models"
+)
 
 var client *mongo.Client
 

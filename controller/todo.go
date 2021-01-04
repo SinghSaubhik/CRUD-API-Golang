@@ -94,7 +94,7 @@ func UpdateTodo(context *gin.Context) {
 
 	context.JSON(200, gin.H{
 		"error": nil,
-		"todo": updatedDoc,
+		"todo":  updatedDoc,
 	})
 
 }
